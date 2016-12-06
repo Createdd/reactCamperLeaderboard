@@ -1,6 +1,26 @@
 /*jshint esversion: 6 */
 /*jshint esnext: true */
 
+class TableContents extends React.Component {
+  render(){
+    var dataArr = this.props.data;
+    var users = '';
+    if(dataArr.length>0){
+      users = dataArr.map((userObj, userID) => {
+        <UserRow userNum={userID+1} image={userObj.img} userName={userObj.username} pointsRecent={userObj.recent} pointsAll={userObj.alltime}/>}//map function
+      );//map the array
+      if(this.props.sortBy == 'all') {
+        users.sort(function(a,b) {
+          return b.props.pointsAll - a.props.pointsAll;
+        });
+      }//if sortBy all
+    }//if array is >0
+    return(
+      <tbody>{users}</tbody>
+    );//return users
+  }//render
+}//TableContents Component
+
 class Table extends React.Component{
   constructor(props){
     super(props);
