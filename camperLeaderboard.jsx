@@ -3,18 +3,18 @@
 
 class UserRow extends React.Component {
   render(){
-    var baseURL = 'https://www.freecodecamp.com/';
+    const preUrl = 'https://www.freecodecamp.com/';
     return (
-      <tr className='camper'>
+      <tr>
         <td>{this.props.userNum}</td>
-        <td className='camper-name'>
-          <a href={baseURL + this.props.userName} target='_blank' className='camper-name-link'>
-            <img src={this.props.image} className='camper-name-image'/>
+        <td>
+          <a href={preUrl + this.props.userName} target='_blank'>
+            <img src={this.props.image} className='image'/>
               {this.props.userName}
           </a>
         </td>
-        <td className='camper-points'>{this.props.pointsRecent}</td>
-        <td className='camper-points'>{this.props.pointsAll}</td>
+        <td>{this.props.pointsRecent}</td>
+        <td>{this.props.pointsAll}</td>
       </tr>
     );//return
   }//render
@@ -31,7 +31,7 @@ class TableContents extends React.Component {
       if(this.props.sortBy == 'all') {
         users.sort(function(a,b) {
           return b.props.pointsAll - a.props.pointsAll;
-        });
+        });//sort by biggest
       }//if sortBy all
     }//if array is >0
     return(
@@ -64,35 +64,46 @@ class Table extends React.Component{
     });//add a state with sorted output after click
   }//click handler
   render(){
-    var recentClass = 'sort-button';
-    var allClass = 'sort-button';
+    var recentClass = 'button';
+    var allClass = 'button';
     if(this.state.sort == 'recent'){
-      recentClass = 'sort-button sorted';
+      recentClass = 'button sorted';
     } else {
-      allClass = 'sort-button sorted';
+      allClass = 'button sorted';
     }
     return (
-      <table className='leaderboard'>
-        <caption className='title'>Leading FreeCodeCampers</caption>
-        <tr>
-          <th className='table-head'>Nr.</th>
-          <th className='table-head'>Name</th>
-          <th><button
-            onClick={this.handleClick.bind(this, 'recent')}
-            className={recentClass}>Points - Last 30 day</button>
-          </th>
-          <th><button
-            onClick={this.handleClick.bind(this, 'all')}
-            className={allClass}>Points All time</button>
-          </th>
-        </tr>
-        <TableContents data={this.state.data} sortBy={this.state.sort}/>
-      </table>
+      <div>
+        <header>
+        <div className="container">
+          <p>*** By <a href="https://github.com/DDCreationStudios" target='_blank'>Daniel Deutsch</a> ***</p>
+        </div>
+        </header>
+        <table>
+          <caption className='title'>Build a Camper Leaderboard</caption>
+          <tr>
+            <th>Nr.</th>
+            <th>Name</th>
+            <th><button
+              onClick={this.handleClick.bind(this, 'recent')}
+              className={recentClass}>Points - Last 30 days</button>
+            </th>
+            <th><button
+              onClick={this.handleClick.bind(this, 'all')}
+              className={allClass}>Points - All time</button>
+            </th>
+          </tr>
+          <TableContents data={this.state.data} sortBy={this.state.sort}/>
+        </table>
+      </div>
     );//return
   }//render
 }//table Component
 
+var source1=<Table source='https://fcctop100.herokuapp.com/api/fccusers/top/recent' />;
+var source2=<Table source='https://fcctop100.herokuapp.com/api/fccusers/top/alltime' />;
+
+
 ReactDOM.render(
-  <Table source='https://fcctop100.herokuapp.com/api/fccusers/top/recent' />,
+  source1,
   document.getElementsByClassName('reactContainer')[0]
 );
