@@ -49,9 +49,9 @@ class Table extends React.Component{
     };//set state
   }//constructor function
   loadData() {
-    $.get(this.props.source, function(res){
-      this.setStatte({
-        data:res
+    $.get(this.props.source, function(result){
+      this.setState({
+        data:result
       });//set the state to the result of the source
     }.bind(this));
   }//load data function
@@ -64,12 +64,12 @@ class Table extends React.Component{
     });//add a state with sorted output after click
   }//click handler
   render(){
-    var recentClass = 'button';
-    var allClass = 'button';
+    var recentClass = 'sort-button';
+    var allClass = 'sort-button';
     if(this.state.sort == 'recent'){
-      recentClass = 'button sorted';
+      recentClass = 'sort-button sorted';
     } else {
-      allClass = 'button sorted';
+      allClass = 'sort-button sorted';
     }
     return (
       <table className='leaderboard'>
@@ -83,7 +83,7 @@ class Table extends React.Component{
           </th>
           <th><button
             onClick={this.handleClick.bind(this, 'all')}
-            className={allClass}>Points - All time</button>
+            className={allClass}>Points All time</button>
           </th>
         </tr>
         <TableContents data={this.state.data} sortBy={this.state.sort}/>
