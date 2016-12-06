@@ -16,17 +16,23 @@ class UserRow extends React.Component {
         <td>{this.props.pointsRecent}</td>
         <td>{this.props.pointsAll}</td>
       </tr>
-    );//return
+    );//return a user table row
   }//render
 }//UserRow Component
 
 class TableContents extends React.Component {
   render(){
-    var dataArr = this.props.data;
-    var users = '';
+    let dataArr = this.props.data;
+    let users = '';
     if(dataArr.length>0){
-      users = dataArr.map((userObj, userID) =>
-        (<UserRow userNum={userID+1} image={userObj.img} userName={userObj.username} pointsRecent={userObj.recent} pointsAll={userObj.alltime}/>)//map function
+      users = dataArr.map((userObj, count) =>
+        (<UserRow
+          userNum={count+1}
+          image={userObj.img}
+          userName={userObj.username}
+          pointsRecent={userObj.recent}
+          pointsAll={userObj.alltime}
+        />)//render the UserRow Component and set the properties to the data properties
       );//map the array
       if(this.props.sortBy == 'all') {
         users.sort(function(a,b) {
@@ -46,31 +52,24 @@ class Table extends React.Component{
     this.state = {
       data:[],
       sort: 'recent'
-    };//set state
-  }//constructor function
-  loadData() {
-    $.get(this.props.source, function(result){
+    };//set state with empty data and the sort key on recent
+  }//constructor function as default
+  fetchData() {
+    $.get(this.props.source1, function(res){
       this.setState({
-        data:result
-      });//set the state to the result of the source
+        data:res
+      });//set the state to the response object of the source
     }.bind(this));
-  }//load data function
+  }//fetchData function to load the data from the link
   componentWillMount() {
-    this.loadData();//call the loadData function
-  }
+    this.fetchData();//call the fetchData function
+  }//mount component before rendering
   handleClick(sortBy, event) {
     this.setState({
       sort: sortBy
     });//add a state with sorted output after click
-  }//click handler
+  }//click handler for sorting
   render(){
-    var recentClass = 'button';
-    var allClass = 'button';
-    if(this.state.sort == 'recent'){
-      recentClass = 'button sorted';
-    } else {
-      allClass = 'button sorted';
-    }
     return (
       <div>
         <header>
@@ -82,14 +81,12 @@ class Table extends React.Component{
           <caption className='title'>Build a Camper Leaderboard</caption>
           <tr>
             <th>Nr.</th>
-            <th>Name</th>
-            <th><button
-              onClick={this.handleClick.bind(this, 'recent')}
-              className={recentClass}>Points - Last 30 days</button>
+            <th>User</th>
+            <th><button onClick={this.handleClick.bind(this, 'recent')}>
+              Points-Last 30 days</button>
             </th>
-            <th><button
-              onClick={this.handleClick.bind(this, 'all')}
-              className={allClass}>Points - All time</button>
+            <th><button onClick={this.handleClick.bind(this, 'all')}>
+              Points-All time</button>
             </th>
           </tr>
           <TableContents data={this.state.data} sortBy={this.state.sort}/>
@@ -99,11 +96,7 @@ class Table extends React.Component{
   }//render
 }//table Component
 
-var source1=<Table source='https://fcctop100.herokuapp.com/api/fccusers/top/recent' />;
-var source2=<Table source='https://fcctop100.herokuapp.com/api/fccusers/top/alltime' />;
-
-
 ReactDOM.render(
-  source1,
+  <Table source1='https://fcctop100.herokuapp.com/api/fccusers/top/recent'  source2='https://fcctop100.herokuapp.com/api/fccusers/top/alltime' />,
   document.getElementsByClassName('reactContainer')[0]
 );
