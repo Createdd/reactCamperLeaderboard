@@ -1,2 +1,2 @@
 #Watch it on Codepen:
-http://codepen.io/ddcreationstudios/pen/QGmmrQ
+http://codepen.io/ddcreationstudios/full/QGmmrQ/
