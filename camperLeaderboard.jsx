@@ -1,6 +1,25 @@
 /*jshint esversion: 6 */
 /*jshint esnext: true */
 
+class UserRow extends React.Component {
+  render(){
+    var baseURL = 'https://www.freecodecamp.com/';
+    return (
+      <tr className='camper'>
+        <td>{this.props.userNum}</td>
+        <td className='camper-name'>
+          <a href={baseURL + this.props.userName} target='_blank' className='camper-name-link'>
+            <img src={this.props.image} className='camper-name-image'/>
+              {this.props.userName}
+          </a>
+        </td>
+        <td className='camper-points'>{this.props.pointsRecent}</td>
+        <td className='camper-points'>{this.props.pointsAll}</td>
+      </tr>
+    );//return
+  }//render
+}//UserRow Component
+
 class TableContents extends React.Component {
   render(){
     var dataArr = this.props.data;
@@ -74,6 +93,6 @@ class Table extends React.Component{
 }//table Component
 
 ReactDOM.render(
-  <Table source='https://fcctop100.herokuapp.com/api/fccusers/top/recent.' />,
+  <Table source='https://fcctop100.herokuapp.com/api/fccusers/top/recent' />,
   document.getElementsByClassName('reactContainer')[0]
 );
