@@ -19,7 +19,6 @@ class UserRow extends React.Component {
     );//return a user table row
   }//render
 }//UserRow Component
-
 class TableContents extends React.Component {
   render(){
     let dataArr = this.props.data;
@@ -45,7 +44,6 @@ class TableContents extends React.Component {
     );//return users
   }//render
 }//TableContents Component
-
 class Table extends React.Component{
   constructor(props){
     super(props);
