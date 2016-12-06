@@ -60,7 +60,7 @@ class Table extends React.Component{
   }
   handleClick(sortBy, event) {
     this.setState({
-      sort: sortyBy
+      sort: sortBy
     });//add a state with sorted output after click
   }//click handler
   render(){
