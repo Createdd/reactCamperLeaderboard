@@ -25,8 +25,8 @@ class TableContents extends React.Component {
     var dataArr = this.props.data;
     var users = '';
     if(dataArr.length>0){
-      users = dataArr.map((userObj, userID) => {
-        <UserRow userNum={userID+1} image={userObj.img} userName={userObj.username} pointsRecent={userObj.recent} pointsAll={userObj.alltime}/>}//map function
+      users = dataArr.map((userObj, userID) =>
+        (<UserRow userNum={userID+1} image={userObj.img} userName={userObj.username} pointsRecent={userObj.recent} pointsAll={userObj.alltime}/>)//map function
       );//map the array
       if(this.props.sortBy == 'all') {
         users.sort(function(a,b) {
